@@ -1,0 +1,27 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO software_licenses (\n            id, client_id, name, vendor, version, license_key, license_type,\n            seats, used_seats, purchase_date, expiry_date, renewal_date,\n            cost, notes, created_at, updated_at\n        )\n        VALUES (\n            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, NOW(), NULL\n        )\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Text",
+        "Varchar",
+        "Int4",
+        "Int4",
+        "Date",
+        "Date",
+        "Date",
+        "Numeric",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "c7fafbdab40ba17a58e0d3e889948475998154969ef45a94bf321ad6db6b663d"
+}

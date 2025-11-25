@@ -1,0 +1,24 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE networks SET\n            client_id = $2, name = $3, description = $4, network_type = $5,\n            ip_range = $6, subnet_mask = $7, gateway = $8, dns_servers = $9,\n            vlan_id = $10, location_id = $11, updated_at = NOW()\n        WHERE id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Text",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "TextArray",
+        "Int4",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4ebafa14444afa4646454775ff656192cbdb5355d03be804ae5443b90d71b1fb"
+}

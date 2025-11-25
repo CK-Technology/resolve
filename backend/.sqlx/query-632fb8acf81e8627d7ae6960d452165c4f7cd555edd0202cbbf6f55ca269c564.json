@@ -1,0 +1,113 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, client_id, asset_id, name, username, password, private_key,\n                   public_key, certificate, uri, notes, tags, last_accessed,\n                   expires_at, created_at, updated_at\n            FROM credentials\n            ORDER BY name ASC\n            LIMIT $1 OFFSET $2\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "asset_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "username",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "password",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "private_key",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "public_key",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "certificate",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "uri",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 10,
+        "name": "notes",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 11,
+        "name": "tags",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 12,
+        "name": "last_accessed",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 13,
+        "name": "expires_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 14,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 15,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "632fb8acf81e8627d7ae6960d452165c4f7cd555edd0202cbbf6f55ca269c564"
+}

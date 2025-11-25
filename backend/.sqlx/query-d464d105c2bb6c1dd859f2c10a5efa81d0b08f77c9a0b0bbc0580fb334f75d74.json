@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE ssl_certificates SET\n            domain_id = $2, client_id = $3, name = $4, common_name = $5,\n            subject_alt_names = $6, issuer = $7, issued_date = $8,\n            expiry_date = $9, certificate_chain = $10, private_key = $11,\n            auto_renew = $12, status = $13, updated_at = NOW()\n        WHERE id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "TextArray",
+        "Varchar",
+        "Date",
+        "Date",
+        "Text",
+        "Text",
+        "Bool",
+        "Varchar"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "d464d105c2bb6c1dd859f2c10a5efa81d0b08f77c9a0b0bbc0580fb334f75d74"
+}

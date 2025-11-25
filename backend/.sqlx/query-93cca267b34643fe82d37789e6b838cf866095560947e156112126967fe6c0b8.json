@@ -1,0 +1,44 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT s.id, s.name, s.common_name, s.expiry_date, c.name as client_name\n        FROM ssl_certificates s\n        JOIN clients c ON s.client_id = c.id\n        WHERE s.expiry_date <= CURRENT_DATE + INTERVAL '7 days'\n        AND s.expiry_date > CURRENT_DATE\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "common_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "expiry_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 4,
+        "name": "client_name",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "93cca267b34643fe82d37789e6b838cf866095560947e156112126967fe6c0b8"
+}

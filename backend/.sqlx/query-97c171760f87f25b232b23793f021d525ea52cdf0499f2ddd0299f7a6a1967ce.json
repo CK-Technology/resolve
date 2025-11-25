@@ -1,0 +1,106 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT id, domain_id, client_id, name, common_name, subject_alt_names,\n               issuer, issued_date, expiry_date, certificate_chain, private_key,\n               auto_renew, status, created_at, updated_at\n        FROM ssl_certificates\n        WHERE expiry_date <= CURRENT_DATE + $1::interval\n        ORDER BY expiry_date ASC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "domain_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "common_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "subject_alt_names",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 6,
+        "name": "issuer",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "issued_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 8,
+        "name": "expiry_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 9,
+        "name": "certificate_chain",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "private_key",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 11,
+        "name": "auto_renew",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 12,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 13,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 14,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Interval"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "97c171760f87f25b232b23793f021d525ea52cdf0499f2ddd0299f7a6a1967ce"
+}

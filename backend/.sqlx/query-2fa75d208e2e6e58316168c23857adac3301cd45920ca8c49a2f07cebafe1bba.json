@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO domains (\n            id, client_id, name, registrar, nameservers, registration_date,\n            expiry_date, auto_renew, dns_records, notes, created_at, updated_at\n        )\n        VALUES (\n            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW(), NULL\n        )\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "TextArray",
+        "Date",
+        "Date",
+        "Bool",
+        "Jsonb",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "2fa75d208e2e6e58316168c23857adac3301cd45920ca8c49a2f07cebafe1bba"
+}

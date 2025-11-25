@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE tasks SET \n         name = COALESCE($2, name),\n         description = COALESCE($3, description),\n         assigned_to = COALESCE($4, assigned_to),\n         status = COALESCE($5, status),\n         priority = COALESCE($6, priority),\n         estimated_hours = COALESCE($7, estimated_hours),\n         actual_hours = COALESCE($8, actual_hours),\n         due_date = COALESCE($9, due_date),\n         completed_at = COALESCE($10, completed_at),\n         updated_at = NOW()\n         WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Varchar",
+        "Text",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "Numeric",
+        "Numeric",
+        "Date",
+        "Timestamptz"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "9cbf6ed8ec2d4aa41aae5952c2b96da2e6caabc66b841f42c95e9288c0d8c414"
+}

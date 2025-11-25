@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE time_entries SET \n         end_time = NOW(),\n         duration_minutes = EXTRACT(EPOCH FROM (NOW() - start_time)) / 60\n         WHERE user_id = $1 AND end_time IS NULL",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "48a54d26d0434f5f1f656fb7349fb2eef88b9745de56145c7ad2b68441567690"
+}

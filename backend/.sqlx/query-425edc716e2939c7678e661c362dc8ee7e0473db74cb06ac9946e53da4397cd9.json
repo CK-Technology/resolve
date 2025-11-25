@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE time_entries SET \n         hourly_rate = COALESCE(hourly_rate, $2),\n         total_amount = CASE WHEN billable THEN \n                           COALESCE(hourly_rate, $2) * (duration_minutes::decimal / 60)\n                        ELSE 0 END\n         WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Numeric"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "425edc716e2939c7678e661c362dc8ee7e0473db74cb06ac9946e53da4397cd9"
+}

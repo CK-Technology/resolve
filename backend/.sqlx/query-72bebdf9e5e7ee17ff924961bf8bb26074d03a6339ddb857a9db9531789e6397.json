@@ -1,0 +1,112 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, client_id, name, vendor, version, license_key, license_type,\n                   seats, used_seats, purchase_date, expiry_date, renewal_date,\n                   cost, notes, created_at, updated_at\n            FROM software_licenses WHERE client_id = $1 ORDER BY name ASC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "vendor",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "version",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "license_key",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "license_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "seats",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 8,
+        "name": "used_seats",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 9,
+        "name": "purchase_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 10,
+        "name": "expiry_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 11,
+        "name": "renewal_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 12,
+        "name": "cost",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 13,
+        "name": "notes",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 14,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 15,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "72bebdf9e5e7ee17ff924961bf8bb26074d03a6339ddb857a9db9531789e6397"
+}

@@ -1,0 +1,96 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, client_id, ticket_id, asset_id, project_id, kb_article_id,\n                   filename, original_filename, mime_type, file_size, file_path,\n                   uploaded_by, created_at\n            FROM files\n            WHERE client_id = $1\n            ORDER BY created_at DESC\n            LIMIT $2 OFFSET $3\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "asset_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 4,
+        "name": "project_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 5,
+        "name": "kb_article_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 6,
+        "name": "filename",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "original_filename",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 8,
+        "name": "mime_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 9,
+        "name": "file_size",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 10,
+        "name": "file_path",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 11,
+        "name": "uploaded_by",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 12,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "551bcdb6f30170c30927d2fb5cb48bc080d8c1d4fd7487143b4bbb6b7f9640fe"
+}

@@ -1,0 +1,82 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            te.id, te.user_id, te.ticket_id, t.subject as ticket_subject,\n            te.project_id, p.name as project_name,\n            c.name as client_name, te.description, te.start_time, te.billable,\n            EXTRACT(EPOCH FROM (NOW() - te.start_time)) / 60 as elapsed_minutes\n         FROM time_entries te\n         LEFT JOIN tickets t ON te.ticket_id = t.id\n         LEFT JOIN projects p ON te.project_id = p.id\n         LEFT JOIN clients c ON COALESCE(t.client_id, p.client_id) = c.id\n         WHERE te.user_id = $1 AND te.end_time IS NULL\n         ORDER BY te.start_time DESC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "ticket_subject",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "project_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 5,
+        "name": "project_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "client_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "start_time",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 9,
+        "name": "billable",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 10,
+        "name": "elapsed_minutes",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      null
+    ]
+  },
+  "hash": "806936f152828072c8af38e5c79c2d93461fa8f496bf45201300b0bdaa1e44d2"
+}

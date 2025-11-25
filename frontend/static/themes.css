@@ -1,0 +1,656 @@
+/* =================================================================
+   Resolve MSP Platform - Theme System
+   Tokyo Night (Night, Storm, Moon) + Dracula
+
+   Font: Fira Code Nerd Font / JetBrains Mono
+   ================================================================= */
+
+/* ===== FONT IMPORTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+/* ===== ROOT VARIABLES - TOKYO NIGHT (Default) ===== */
+:root,
+[data-theme="tokyo-night"] {
+  /* === Background Colors === */
+  --bg-primary: #1a1b26;
+  --bg-secondary: #16161e;
+  --bg-tertiary: #1f2335;
+  --bg-elevated: #24283b;
+  --bg-highlight: #292e42;
+  --bg-selection: #515c7e4d;
+  --bg-hover: #1e202e;
+  --bg-input: #14141b;
+
+  /* === Foreground Colors === */
+  --fg-primary: #c0caf5;
+  --fg-secondary: #a9b1d6;
+  --fg-muted: #787c99;
+  --fg-dimmed: #565f89;
+  --fg-disabled: #545c7e;
+
+  /* === Border Colors === */
+  --border-primary: #101014;
+  --border-secondary: #292e42;
+  --border-highlight: #3b4261;
+  --border-active: #3d59a1;
+
+  /* === Accent Colors (Blue Spectrum) === */
+  --accent-primary: #7aa2f7;      /* Main blue */
+  --accent-secondary: #7dcfff;    /* Cyan */
+  --accent-tertiary: #2ac3de;     /* Light cyan */
+  --accent-blue-dark: #3d59a1;    /* Dark blue */
+  --accent-blue-muted: #394b70;   /* Muted blue */
+
+  /* === Semantic Colors === */
+  --color-success: #9ece6a;       /* Green */
+  --color-success-muted: #73daca; /* Teal/Mint green */
+  --color-warning: #e0af68;       /* Yellow/Orange */
+  --color-error: #f7768e;         /* Red/Pink */
+  --color-error-dark: #db4b4b;    /* Dark red */
+  --color-info: #0db9d7;          /* Info cyan */
+
+  /* === Syntax Highlighting === */
+  --syntax-keyword: #bb9af7;      /* Purple - keywords, storage */
+  --syntax-function: #7aa2f7;     /* Blue - functions */
+  --syntax-string: #9ece6a;       /* Green - strings */
+  --syntax-number: #ff9e64;       /* Orange - numbers, constants */
+  --syntax-variable: #c0caf5;     /* Foreground - variables */
+  --syntax-property: #73daca;     /* Teal - object properties */
+  --syntax-operator: #89ddff;     /* Light cyan - operators */
+  --syntax-comment: #565f89;      /* Muted - comments */
+  --syntax-tag: #f7768e;          /* Red - HTML tags */
+  --syntax-attribute: #bb9af7;    /* Purple - attributes */
+  --syntax-type: #0db9d7;         /* Cyan - types, classes */
+  --syntax-regexp: #b4f9f8;       /* Light teal - regex */
+
+  /* === UI Component Colors === */
+  --button-primary-bg: #3d59a1dd;
+  --button-primary-hover: #3d59a1aa;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #3b3e52;
+  --button-secondary-text: #a9b1d6;
+
+  /* === Status Badge Colors === */
+  --badge-open: #3d59a1;
+  --badge-in-progress: #e0af68;
+  --badge-waiting: #bb9af7;
+  --badge-resolved: #9ece6a;
+  --badge-closed: #565f89;
+
+  /* === Priority Colors === */
+  --priority-critical: #f7768e;
+  --priority-high: #ff9e64;
+  --priority-medium: #e0af68;
+  --priority-normal: #7aa2f7;
+  --priority-low: #565f89;
+
+  /* === Chart Colors === */
+  --chart-1: #7aa2f7;
+  --chart-2: #9ece6a;
+  --chart-3: #e0af68;
+  --chart-4: #f7768e;
+  --chart-5: #bb9af7;
+  --chart-6: #73daca;
+
+  /* === Git Colors === */
+  --git-added: #449dab;
+  --git-modified: #6183bb;
+  --git-deleted: #914c54;
+
+  /* === Scrollbar === */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: #868bc415;
+  --scrollbar-thumb-hover: #868bc422;
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+  /* === Font Settings === */
+  --font-mono: 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ===== TOKYO NIGHT STORM ===== */
+[data-theme="tokyo-storm"] {
+  --bg-primary: #24283b;
+  --bg-secondary: #1f2335;
+  --bg-tertiary: #1b1e2d;
+  --bg-elevated: #292e42;
+  --bg-highlight: #343b58;
+  --bg-hover: #292e42;
+  --bg-input: #1a1e2e;
+}
+
+/* ===== TOKYO NIGHT MOON ===== */
+[data-theme="tokyo-moon"] {
+  --bg-primary: #222436;
+  --bg-secondary: #1e2030;
+  --bg-tertiary: #191B29;
+  --bg-elevated: #2f334d;
+  --bg-highlight: #3b4261;
+  --bg-hover: #2f334d;
+  --bg-input: #1a1c2a;
+
+  /* Slightly different accent colors for Moon */
+  --accent-primary: #82aaff;
+  --accent-secondary: #86e1fc;
+  --fg-primary: #c8d3f5;
+  --fg-secondary: #828bb8;
+  --syntax-comment: #636da6;
+  --syntax-string: #c3e88d;
+  --syntax-keyword: #c099ff;
+  --syntax-number: #ff966c;
+  --color-success: #c3e88d;
+  --color-success-muted: #4fd6be;
+  --color-warning: #ffc777;
+  --color-error: #ff757f;
+  --syntax-property: #4fd6be;
+}
+
+/* ===== DRACULA THEME ===== */
+[data-theme="dracula"] {
+  --bg-primary: #282a36;
+  --bg-secondary: #21222c;
+  --bg-tertiary: #1e1f29;
+  --bg-elevated: #343746;
+  --bg-highlight: #44475a;
+  --bg-selection: #44475a80;
+  --bg-hover: #313442;
+  --bg-input: #1e1f29;
+
+  --fg-primary: #f8f8f2;
+  --fg-secondary: #e0e0e0;
+  --fg-muted: #6272a4;
+  --fg-dimmed: #6272a4;
+  --fg-disabled: #545569;
+
+  --border-primary: #191a21;
+  --border-secondary: #44475a;
+  --border-highlight: #6272a4;
+  --border-active: #bd93f9;
+
+  --accent-primary: #bd93f9;      /* Purple */
+  --accent-secondary: #8be9fd;    /* Cyan */
+  --accent-tertiary: #50fa7b;     /* Green */
+  --accent-blue-dark: #6272a4;
+  --accent-blue-muted: #44475a;
+
+  --color-success: #50fa7b;
+  --color-success-muted: #8be9fd;
+  --color-warning: #f1fa8c;
+  --color-error: #ff5555;
+  --color-error-dark: #ff6e6e;
+  --color-info: #8be9fd;
+
+  --syntax-keyword: #ff79c6;      /* Pink */
+  --syntax-function: #50fa7b;     /* Green */
+  --syntax-string: #f1fa8c;       /* Yellow */
+  --syntax-number: #bd93f9;       /* Purple */
+  --syntax-variable: #f8f8f2;
+  --syntax-property: #8be9fd;     /* Cyan */
+  --syntax-operator: #ff79c6;     /* Pink */
+  --syntax-comment: #6272a4;
+  --syntax-tag: #ff79c6;
+  --syntax-attribute: #50fa7b;
+  --syntax-type: #8be9fd;
+  --syntax-regexp: #f1fa8c;
+
+  --button-primary-bg: #bd93f9dd;
+  --button-primary-hover: #bd93f9aa;
+
+  --badge-open: #6272a4;
+  --badge-in-progress: #f1fa8c;
+  --badge-waiting: #bd93f9;
+  --badge-resolved: #50fa7b;
+
+  --priority-critical: #ff5555;
+  --priority-high: #ffb86c;
+  --priority-medium: #f1fa8c;
+  --priority-normal: #bd93f9;
+
+  --chart-1: #bd93f9;
+  --chart-2: #50fa7b;
+  --chart-3: #f1fa8c;
+  --chart-4: #ff5555;
+  --chart-5: #ff79c6;
+  --chart-6: #8be9fd;
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--fg-primary);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Monospace for code elements */
+code, pre, kbd, .mono, .font-mono,
+input[type="password"], .password-display {
+  font-family: var(--font-mono);
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background-color: var(--bg-selection);
+  color: var(--fg-primary);
+}
+
+/* ===== FOCUS STYLES ===== */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* ===== LINKS ===== */
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* ===== THEME-AWARE UTILITY CLASSES ===== */
+
+/* Backgrounds */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+.bg-elevated { background-color: var(--bg-elevated); }
+.bg-highlight { background-color: var(--bg-highlight); }
+.bg-hover:hover { background-color: var(--bg-hover); }
+
+/* Text Colors */
+.text-primary { color: var(--fg-primary); }
+.text-secondary { color: var(--fg-secondary); }
+.text-muted { color: var(--fg-muted); }
+.text-dimmed { color: var(--fg-dimmed); }
+
+/* Accent Colors */
+.text-accent { color: var(--accent-primary); }
+.text-accent-secondary { color: var(--accent-secondary); }
+.text-success { color: var(--color-success); }
+.text-success-muted { color: var(--color-success-muted); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+.text-info { color: var(--color-info); }
+
+/* Borders */
+.border-primary { border-color: var(--border-primary); }
+.border-secondary { border-color: var(--border-secondary); }
+.border-highlight { border-color: var(--border-highlight); }
+.border-active { border-color: var(--border-active); }
+
+/* ===== STATUS BADGES ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-open { background-color: var(--badge-open); color: white; }
+.badge-in-progress { background-color: var(--badge-in-progress); color: var(--bg-primary); }
+.badge-waiting { background-color: var(--badge-waiting); color: var(--bg-primary); }
+.badge-resolved { background-color: var(--badge-resolved); color: var(--bg-primary); }
+.badge-closed { background-color: var(--badge-closed); color: white; }
+
+/* ===== PRIORITY BADGES ===== */
+.priority-critical {
+  background-color: var(--priority-critical);
+  color: white;
+}
+.priority-high {
+  background-color: var(--priority-high);
+  color: var(--bg-primary);
+}
+.priority-medium {
+  background-color: var(--priority-medium);
+  color: var(--bg-primary);
+}
+.priority-normal {
+  background-color: var(--priority-normal);
+  color: white;
+}
+.priority-low {
+  background-color: var(--priority-low);
+  color: white;
+}
+
+/* ===== FORM ELEMENTS ===== */
+input, textarea, select {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-primary);
+  color: var(--fg-primary);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--border-active);
+  box-shadow: 0 0 0 3px rgba(61, 89, 161, 0.25);
+  outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--fg-dimmed);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--button-primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-highlight);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--fg-secondary);
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-hover);
+  color: var(--fg-primary);
+}
+
+.btn-danger {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: var(--color-error-dark);
+}
+
+/* ===== CARDS ===== */
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.card-elevated {
+  background-color: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: var(--bg-tertiary);
+  color: var(--fg-secondary);
+  font-weight: 500;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+tr:hover td {
+  background-color: var(--bg-hover);
+}
+
+/* ===== PASSWORD DISPLAY (Hudu-style) ===== */
+.password-container {
+  font-family: var(--font-mono);
+}
+
+.password-hidden {
+  color: var(--fg-dimmed);
+  letter-spacing: 0.1em;
+}
+
+.password-visible {
+  color: var(--fg-primary);
+}
+
+.password-phonetic {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.password-phonetic-char {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.5rem;
+}
+
+.password-phonetic-char .char {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.password-phonetic-char .char.is-number {
+  color: var(--syntax-number);
+}
+
+.password-phonetic-char .char.is-upper {
+  color: var(--accent-primary);
+}
+
+.password-phonetic-char .char.is-special {
+  color: var(--color-error);
+}
+
+.password-phonetic-char .word {
+  font-size: 0.65rem;
+  color: var(--fg-muted);
+  text-transform: lowercase;
+}
+
+/* ===== SYNTAX HIGHLIGHTING ===== */
+.syntax-keyword { color: var(--syntax-keyword); }
+.syntax-function { color: var(--syntax-function); }
+.syntax-string { color: var(--syntax-string); }
+.syntax-number { color: var(--syntax-number); }
+.syntax-variable { color: var(--syntax-variable); }
+.syntax-property { color: var(--syntax-property); }
+.syntax-operator { color: var(--syntax-operator); }
+.syntax-comment { color: var(--syntax-comment); font-style: italic; }
+.syntax-tag { color: var(--syntax-tag); }
+.syntax-attribute { color: var(--syntax-attribute); }
+.syntax-type { color: var(--syntax-type); }
+
+/* ===== TIMER WIDGET ===== */
+.timer-widget {
+  font-family: var(--font-mono);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.timer-display {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-success-muted);
+  letter-spacing: 0.05em;
+}
+
+.timer-display.is-paused {
+  color: var(--color-warning);
+}
+
+.timer-display.is-running {
+  color: var(--color-success-muted);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-fade-in { animation: fadeIn 0.2s ease-out; }
+.animate-slide-in { animation: slideIn 0.2s ease-out; }
+
+/* ===== RESPONSIVE UTILITIES ===== */
+@media (max-width: 768px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* ===== CODE BLOCKS ===== */
+pre {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+code {
+  background-color: var(--bg-elevated);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+kbd {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+/* ===== TOOLTIP ===== */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0.75rem;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--fg-secondary);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease;
+  z-index: 100;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

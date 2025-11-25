@@ -1,0 +1,142 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database with performance tuning
+  db:
+    image: postgres:15-alpine
+    container_name: resolve_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: resolve
+      POSTGRES_USER: resolve
+      POSTGRES_PASSWORD: resolve
+      # Performance settings
+      POSTGRES_SHARED_BUFFERS: 256MB
+      POSTGRES_EFFECTIVE_CACHE_SIZE: 1GB
+      POSTGRES_WORK_MEM: 4MB
+      POSTGRES_MAINTENANCE_WORK_MEM: 64MB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"  # Only bind to localhost for security
+    networks:
+      - resolve-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resolve -d resolve"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: resolve_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - resolve-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Main application with improved configuration
+  app:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+    container_name: resolve_app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://resolve:resolve@db:5432/resolve"
+      REDIS_URL: "redis://redis:6379"
+      SERVER_ADDR: "127.0.0.1:8080"
+      JWT_SECRET: "your-super-secret-jwt-key-change-in-production"
+      RUST_LOG: "info"
+      RUST_BACKTRACE: "1"
+      # Performance settings
+      TOKIO_WORKER_THREADS: "4"
+    networks:
+      - resolve-network
+    volumes:
+      - app_data:/app/data
+      - app_logs:/var/log/supervisor
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+    # Security settings
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+
+  # Optional: Backup service (run with docker-compose --profile backup up)
+  backup:
+    image: postgres:15-alpine
+    container_name: resolve_backup
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: resolve
+    volumes:
+      - backup_data:/backup
+      - ../../scripts:/scripts:ro
+    networks:
+      - resolve-network
+    command: >
+      sh -c "
+        echo 'Starting backup at $(date)' &&
+        pg_dump -h db -U resolve -d resolve -f /backup/resolve_backup_$(date +%Y%m%d_%H%M%S).sql &&
+        echo 'Backup completed at $(date)'
+      "
+    profiles:
+      - backup
+
+networks:
+  resolve-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_data:
+  app_logs:
+  backup_data:

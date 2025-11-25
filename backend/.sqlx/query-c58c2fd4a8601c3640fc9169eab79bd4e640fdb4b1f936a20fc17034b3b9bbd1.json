@@ -1,0 +1,203 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            t.id, t.number, t.client_id, c.name as client_name,\n            t.contact_id, ct.name as contact_name,\n            t.asset_id, a.name as asset_name,\n            t.assigned_to, \n            CASE WHEN u1.id IS NOT NULL THEN u1.first_name || ' ' || u1.last_name ELSE NULL END as assigned_name,\n            t.opened_by, u2.first_name || ' ' || u2.last_name as opened_by_name,\n            t.subject, t.details, t.status, t.priority,\n            t.category_id, tc.name as category_name,\n            t.sla_id, t.response_due_at, t.resolution_due_at,\n            t.first_response_at, t.resolved_at, t.sla_breached,\n            t.billable, t.estimated_hours, t.actual_hours, t.source,\n            t.created_at, t.updated_at, t.closed_at\n         FROM tickets t\n         LEFT JOIN clients c ON t.client_id = c.id\n         LEFT JOIN contacts ct ON t.contact_id = ct.id\n         LEFT JOIN assets a ON t.asset_id = a.id\n         LEFT JOIN users u1 ON t.assigned_to = u1.id\n         LEFT JOIN users u2 ON t.opened_by = u2.id\n         LEFT JOIN ticket_categories tc ON t.category_id = tc.id\n         ORDER BY t.created_at DESC\n         LIMIT $1 OFFSET $2",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "number",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "client_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "contact_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 5,
+        "name": "contact_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "asset_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 7,
+        "name": "asset_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 8,
+        "name": "assigned_to",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 9,
+        "name": "assigned_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "opened_by",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 11,
+        "name": "opened_by_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 12,
+        "name": "subject",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 13,
+        "name": "details",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 14,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 15,
+        "name": "priority",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 16,
+        "name": "category_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 17,
+        "name": "category_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 18,
+        "name": "sla_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 19,
+        "name": "response_due_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 20,
+        "name": "resolution_due_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 21,
+        "name": "first_response_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 22,
+        "name": "resolved_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 23,
+        "name": "sla_breached",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 24,
+        "name": "billable",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 25,
+        "name": "estimated_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 26,
+        "name": "actual_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 27,
+        "name": "source",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 28,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 29,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 30,
+        "name": "closed_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      null,
+      false,
+      null,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "c58c2fd4a8601c3640fc9169eab79bd4e640fdb4b1f936a20fc17034b3b9bbd1"
+}

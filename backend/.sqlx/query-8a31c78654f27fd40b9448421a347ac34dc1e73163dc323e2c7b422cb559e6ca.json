@@ -1,0 +1,88 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT id, client_id, name, registrar, nameservers, registration_date,\n               expiry_date, auto_renew, dns_records, notes, created_at, updated_at\n        FROM domains\n        WHERE expiry_date <= CURRENT_DATE + ($1 || ' days')::INTERVAL\n        ORDER BY expiry_date ASC\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "registrar",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "nameservers",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 5,
+        "name": "registration_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 6,
+        "name": "expiry_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 7,
+        "name": "auto_renew",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 8,
+        "name": "dns_records",
+        "type_info": "Jsonb"
+      },
+      {
+        "ordinal": 9,
+        "name": "notes",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 10,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 11,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "8a31c78654f27fd40b9448421a347ac34dc1e73163dc323e2c7b422cb559e6ca"
+}

@@ -1,0 +1,20 @@
+pub mod email;
+pub mod email_processor;
+pub mod bms_workflows;
+pub mod password_manager;
+pub mod encryption;
+pub mod teams_integration;
+pub mod domain_ssl_monitor;
+pub mod cache;
+pub mod audit;
+pub mod metrics;
+
+pub use email::EmailService;
+pub use email_processor::{EmailProcessor, EmailProcessorConfig};
+pub use bms_workflows::{BmsWorkflowService, BmsWorkflowConfig};
+pub use password_manager::PasswordManagerService;
+pub use encryption::EncryptionService;
+pub use teams_integration::{TeamsNotificationService, TicketNotification, DailySummary, TeamsError};
+pub use cache::{CacheService, CacheError, CacheResult, cache_keys, ttl};
+pub use audit::{AuditService, AuditAction, AuditSeverity, AuditEntryBuilder, AuditLogEntry, ChangeTracker};
+pub use metrics::{MetricsService, MetricType, HealthStatus, RequestLog, RequestStats, Timer, metric_names};

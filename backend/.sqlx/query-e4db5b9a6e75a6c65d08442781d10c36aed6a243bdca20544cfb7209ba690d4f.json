@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE domains SET\n            client_id = $2, name = $3, registrar = $4, nameservers = $5,\n            registration_date = $6, expiry_date = $7, auto_renew = $8,\n            dns_records = $9, notes = $10, updated_at = NOW()\n        WHERE id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "TextArray",
+        "Date",
+        "Date",
+        "Bool",
+        "Jsonb",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "e4db5b9a6e75a6c65d08442781d10c36aed6a243bdca20544cfb7209ba690d4f"
+}

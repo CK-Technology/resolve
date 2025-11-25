@@ -1,0 +1,56 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            COUNT(*) as total_invoices,\n            COUNT(*) FILTER (WHERE status = 'draft') as draft_invoices,\n            COUNT(*) FILTER (WHERE status = 'sent') as sent_invoices,\n            COUNT(*) FILTER (WHERE status = 'paid') as paid_invoices,\n            COUNT(*) FILTER (WHERE due_date < CURRENT_DATE AND status != 'paid') as overdue_invoices,\n            COALESCE(SUM(balance) FILTER (WHERE status != 'paid'), 0) as total_outstanding,\n            COALESCE(SUM(balance) FILTER (WHERE due_date < CURRENT_DATE AND status != 'paid'), 0) as total_overdue\n         FROM invoices",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "total_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "draft_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "sent_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "paid_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 4,
+        "name": "overdue_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 5,
+        "name": "total_outstanding",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 6,
+        "name": "total_overdue",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "75a93c843f35712f831a6b8bd15ccf934d9d8d8fea6965798fa2ccca8a675ad4"
+}

@@ -1,0 +1,26 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO ssl_certificates (\n            id, domain_id, client_id, name, common_name, subject_alt_names,\n            issuer, issued_date, expiry_date, certificate_chain, private_key,\n            auto_renew, status, created_at, updated_at\n        )\n        VALUES (\n            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, NOW(), NULL\n        )\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "TextArray",
+        "Varchar",
+        "Date",
+        "Date",
+        "Text",
+        "Text",
+        "Bool",
+        "Varchar"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4fe154ca513d95d8406e8e1fcf5db3b2a79717bedf9873513e4444eba6c6fca2"
+}

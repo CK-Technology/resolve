@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT pat.contact_id, c.client_id \n         FROM portal_access_tokens pat\n         JOIN contacts c ON pat.contact_id = c.id\n         WHERE pat.token = $1 AND pat.expires_at > NOW()",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "contact_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "42207c587b7662a2390653ae1f0ede204617b63b0a37f1a987c690f93db9eeb5"
+}

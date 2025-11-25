@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE tickets SET \n         subject = COALESCE($2, subject),\n         details = COALESCE($3, details),\n         status = COALESCE($4, status),\n         priority = COALESCE($5, priority),\n         assigned_to = COALESCE($6, assigned_to),\n         category_id = COALESCE($7, category_id),\n         billable = COALESCE($8, billable),\n         estimated_hours = COALESCE($9, estimated_hours),\n         updated_at = NOW()\n         WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Varchar",
+        "Text",
+        "Varchar",
+        "Varchar",
+        "Uuid",
+        "Uuid",
+        "Bool",
+        "Numeric"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "da70966f3c9a3eb835b86ebbd2808ed3ab7cb696641e57d01bd519f5e7d0a7b4"
+}

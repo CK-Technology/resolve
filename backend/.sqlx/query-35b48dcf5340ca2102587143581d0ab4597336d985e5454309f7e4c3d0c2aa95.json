@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE websocket_connections SET disconnected_at = NOW() WHERE connection_id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "35b48dcf5340ca2102587143581d0ab4597336d985e5454309f7e4c3d0c2aa95"
+}

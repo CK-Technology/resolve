@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            (SELECT COUNT(*) FROM tickets WHERE client_id = $1 AND status IN ('open', 'in_progress')) as open_tickets,\n            (SELECT COUNT(*) FROM invoices WHERE client_id = $1 AND status != 'paid') as pending_invoices,\n            (SELECT COUNT(*) FROM assets WHERE client_id = $1 AND archived_at IS NULL) as total_assets,\n            (SELECT COALESCE(SUM(balance), 0) FROM invoices WHERE client_id = $1 AND status != 'paid') as outstanding_balance",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "open_tickets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "pending_invoices",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "total_assets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "outstanding_balance",
+        "type_info": "Numeric"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "9591fb0eab747adafdac32c6bf69176a77551a47b313cab9f078e9699e22df31"
+}

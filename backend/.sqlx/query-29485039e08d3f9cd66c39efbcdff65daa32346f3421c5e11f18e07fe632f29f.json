@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT u.id FROM users u\n            JOIN roles r ON u.role_id = r.id\n            WHERE r.name = 'admin' AND u.is_active = true\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "29485039e08d3f9cd66c39efbcdff65daa32346f3421c5e11f18e07fe632f29f"
+}

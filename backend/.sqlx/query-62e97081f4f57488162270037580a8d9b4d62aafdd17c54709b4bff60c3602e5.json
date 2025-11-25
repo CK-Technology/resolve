@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE portal_access_tokens SET last_used_at = NOW() WHERE token = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "62e97081f4f57488162270037580a8d9b4d62aafdd17c54709b4bff60c3602e5"
+}

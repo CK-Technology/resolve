@@ -1,0 +1,16 @@
+[package]
+name = "resolve-shared"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serde = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+rust_decimal = { version = "1.35", features = ["serde"] }
+serde_json = "1.0"
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "rust_decimal"], optional = true }
+
+[features]
+default = ["sqlx"]
+sqlx = ["dep:sqlx"]

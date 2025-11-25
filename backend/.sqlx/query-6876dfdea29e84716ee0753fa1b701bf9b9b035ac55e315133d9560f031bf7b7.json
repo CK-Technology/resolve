@@ -1,0 +1,124 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            t.id, t.project_id, p.name as project_name,\n            t.ticket_id, tk.number as ticket_number,\n            t.name, t.description,\n            t.assigned_to,\n            CASE WHEN u.id IS NOT NULL THEN u.first_name || ' ' || u.last_name ELSE NULL END as assigned_name,\n            t.status, t.priority,\n            t.estimated_hours, t.actual_hours,\n            COALESCE(te_stats.time_logged, 0) as time_logged,\n            t.due_date, t.completed_at,\n            t.created_at, t.updated_at\n         FROM tasks t\n         LEFT JOIN projects p ON t.project_id = p.id\n         LEFT JOIN tickets tk ON t.ticket_id = tk.id\n         LEFT JOIN users u ON t.assigned_to = u.id\n         LEFT JOIN (\n            SELECT \n                task_id,\n                SUM(duration_minutes) / 60.0 as time_logged\n            FROM time_entries \n            WHERE task_id = $1\n            GROUP BY task_id\n         ) te_stats ON t.id = te_stats.task_id\n         WHERE t.id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "project_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "project_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "ticket_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 4,
+        "name": "ticket_number",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 5,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "assigned_to",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 8,
+        "name": "assigned_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 9,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 10,
+        "name": "priority",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 11,
+        "name": "estimated_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 12,
+        "name": "actual_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 13,
+        "name": "time_logged",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 14,
+        "name": "due_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 15,
+        "name": "completed_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 16,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 17,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      true,
+      null,
+      true,
+      true,
+      true,
+      true,
+      null,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "6876dfdea29e84716ee0753fa1b701bf9b9b035ac55e315133d9560f031bf7b7"
+}

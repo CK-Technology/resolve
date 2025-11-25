@@ -1,0 +1,92 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT id, client_id, name, description, network_type, ip_range,\n                   subnet_mask, gateway, dns_servers, vlan_id, location_id,\n                   created_at, updated_at\n            FROM networks ORDER BY name ASC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "network_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 5,
+        "name": "ip_range",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "subnet_mask",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "gateway",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 8,
+        "name": "dns_servers",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 9,
+        "name": "vlan_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 10,
+        "name": "location_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 11,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 12,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "92ceba0e4765071d898c1e184e31a237da7dd902281e364c922795556be67aa2"
+}

@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE websocket_connections SET last_ping_at = NOW() WHERE connection_id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "be859dc23a361bd333658442f79f127d5714a4f0e921c8b8fa876945ca4e076c"
+}

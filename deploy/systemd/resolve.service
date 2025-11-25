@@ -1,0 +1,39 @@
+[Unit]
+Description=Resolve MSP Platform
+Documentation=https://github.com/CK-Technology/resolve
+After=network-online.target docker.service postgresql.service redis.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=resolve
+Group=resolve
+WorkingDirectory=/opt/resolve/app/deploy/docker
+EnvironmentFile=/opt/resolve/.env
+
+# Docker Compose commands
+ExecStartPre=/usr/bin/docker compose pull --quiet
+ExecStart=/usr/bin/docker compose -f docker-compose.prod.yml up --remove-orphans
+ExecStop=/usr/bin/docker compose -f docker-compose.prod.yml down --timeout 30
+ExecReload=/usr/bin/docker compose -f docker-compose.prod.yml restart
+
+# Restart policy
+Restart=always
+RestartSec=10
+TimeoutStartSec=300
+TimeoutStopSec=60
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/resolve /var/lib/resolve /var/log/resolve
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65535
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,229 @@
+# Production Docker Compose for Resolve
+version: '3.8'
+
+services:
+  # PostgreSQL Database with optimizations
+  db:
+    image: postgres:15-alpine
+    container_name: resolve_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: resolve
+      POSTGRES_USER: resolve
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      # Performance tuning
+      POSTGRES_SHARED_BUFFERS: 256MB
+      POSTGRES_EFFECTIVE_CACHE_SIZE: 1GB
+      POSTGRES_WORK_MEM: 4MB
+      POSTGRES_MAINTENANCE_WORK_MEM: 64MB
+      POSTGRES_WAL_BUFFERS: 16MB
+      POSTGRES_CHECKPOINT_COMPLETION_TARGET: 0.9
+      POSTGRES_RANDOM_PAGE_COST: 1.1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:Z
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./docker/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - resolve-network
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resolve -d resolve"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db_password
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: resolve_redis
+    restart: unless-stopped
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis_data:/data:Z
+      - ./docker/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - resolve-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Main application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.optimized
+      target: production
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+      cache_from:
+        - resolve:latest
+    container_name: resolve_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://resolve:password@db:5432/resolve
+      REDIS_URL: redis://redis:6379
+      SERVER_ADDR: 127.0.0.1:8080
+      RUST_LOG: warn
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+      ENCRYPTION_KEY_FILE: /run/secrets/encryption_key
+      # Performance settings
+      RUST_BACKTRACE: 0
+      TOKIO_WORKER_THREADS: 4
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - resolve-network
+    volumes:
+      - app_data:/app/data:Z
+      - app_logs:/app/logs:Z
+      - ./docker/ssl:/etc/ssl/certs:ro
+    secrets:
+      - jwt_secret
+      - encryption_key
+      - db_password
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+    # Security settings
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run
+      - /var/cache/nginx
+    security_opt:
+      - no-new-privileges:true
+
+  # Backup service
+  backup:
+    image: postgres:15-alpine
+    container_name: resolve_backup
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGPASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - backup_data:/backup:Z
+      - ./scripts/backup.sh:/backup.sh:ro
+    networks:
+      - resolve-network
+    secrets:
+      - db_password
+    command: ["/backup.sh"]
+    profiles:
+      - backup
+
+  # Log management with Promtail (optional)
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: resolve_promtail
+    restart: unless-stopped
+    volumes:
+      - app_logs:/var/log/app:ro
+      - ./docker/promtail-config.yml:/etc/promtail/config.yml:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - resolve-network
+    profiles:
+      - monitoring
+
+  # Nginx Prometheus Exporter (optional)
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: resolve_nginx_exporter
+    restart: unless-stopped
+    command: ['-nginx.scrape-uri=http://app:80/nginx_status']
+    ports:
+      - "127.0.0.1:9113:9113"
+    networks:
+      - resolve-network
+    profiles:
+      - monitoring
+
+networks:
+  resolve-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/postgres
+  redis_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/redis
+  app_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/app
+  app_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./logs
+  backup_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./backups
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
+  encryption_key:
+    file: ./secrets/encryption_key.txt

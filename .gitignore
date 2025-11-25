@@ -1,3 +1,35 @@
+# Build artifacts
 /target
-Cargo.lock
 **/*.rs.bk
+
+# Dependencies
+Cargo.lock
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Internal/Development
+TODO.md
+archive/
+
+# Logs
+*.log
+logs/

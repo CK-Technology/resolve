@@ -1,0 +1,38 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            COUNT(*) as total_tickets,\n            COUNT(*) FILTER (WHERE status IN ('open', 'in_progress')) as open_tickets,\n            COUNT(*) FILTER (WHERE resolution_due_at < NOW() AND status NOT IN ('closed', 'resolved')) as overdue_tickets,\n            COUNT(*) FILTER (WHERE sla_breached = true) as sla_breached\n         FROM tickets",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "total_tickets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 1,
+        "name": "open_tickets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 2,
+        "name": "overdue_tickets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 3,
+        "name": "sla_breached",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "904b29b882300a45e1a643503c91af754a80443bbf2cce4dfe03474e87062fa5"
+}

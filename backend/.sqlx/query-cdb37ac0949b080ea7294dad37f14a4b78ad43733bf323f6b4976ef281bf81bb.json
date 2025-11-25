@@ -1,0 +1,47 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT \n            a.id,\n            a.title,\n            COALESCE(a.excerpt, LEFT(a.content, 200)) as excerpt,\n            c.name as category_name,\n            ts_rank(\n                to_tsvector('english', a.title || ' ' || COALESCE(a.content, '') || ' ' || COALESCE(a.excerpt, '')),\n                plainto_tsquery('english', $1)\n            ) as relevance_score\n        FROM kb_articles a\n        LEFT JOIN kb_categories c ON a.category_id = c.id\n        WHERE \n            a.status = 'published' AND\n            to_tsvector('english', a.title || ' ' || COALESCE(a.content, '') || ' ' || COALESCE(a.excerpt, ''))\n            @@ plainto_tsquery('english', $1)\n        ORDER BY relevance_score DESC\n        LIMIT $2\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "excerpt",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "category_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "relevance_score",
+        "type_info": "Float4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      null,
+      false,
+      null
+    ]
+  },
+  "hash": "cdb37ac0949b080ea7294dad37f14a4b78ad43733bf323f6b4976ef281bf81bb"
+}

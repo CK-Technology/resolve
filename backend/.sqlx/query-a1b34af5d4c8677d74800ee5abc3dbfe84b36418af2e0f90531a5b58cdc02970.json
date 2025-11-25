@@ -1,0 +1,19 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE integrations SET\n            name = $2, integration_type = $3, config = $4, credentials = $5,\n            enabled = $6, updated_at = NOW()\n        WHERE id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "Jsonb",
+        "Jsonb",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "a1b34af5d4c8677d74800ee5abc3dbfe84b36418af2e0f90531a5b58cdc02970"
+}

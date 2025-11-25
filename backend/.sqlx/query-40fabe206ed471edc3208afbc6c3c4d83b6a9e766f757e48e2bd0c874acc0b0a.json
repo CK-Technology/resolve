@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                    INSERT INTO domains (id, client_id, name, registrar, nameservers, created_at, updated_at)\n                    VALUES (gen_random_uuid(), NULL, $1, 'Cloudflare', $2, NOW(), NOW())\n                    ON CONFLICT (name) DO UPDATE SET\n                        nameservers = $2,\n                        updated_at = NOW()\n                    ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "TextArray"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "40fabe206ed471edc3208afbc6c3c4d83b6a9e766f757e48e2bd0c874acc0b0a"
+}

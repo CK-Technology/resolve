@@ -1,0 +1,143 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT \n            p.id, p.client_id, c.name as client_name,\n            p.name, p.description, p.status,\n            p.start_date, p.end_date, p.budget, p.hourly_rate,\n            p.project_manager_id,\n            CASE WHEN u.id IS NOT NULL THEN u.first_name || ' ' || u.last_name ELSE NULL END as project_manager_name,\n            COALESCE(te_stats.total_hours, 0) as total_hours,\n            COALESCE(te_stats.billable_hours, 0) as billable_hours,\n            COALESCE(te_stats.total_cost, 0) as total_cost,\n            COALESCE(task_stats.task_count, 0) as task_count,\n            COALESCE(task_stats.completed_tasks, 0) as completed_tasks,\n            COALESCE(ticket_stats.open_tickets, 0) as open_tickets,\n            CASE WHEN COALESCE(task_stats.task_count, 0) > 0 \n                 THEN (COALESCE(task_stats.completed_tasks, 0) * 100 / task_stats.task_count)::int\n                 ELSE 0 END as progress_percentage,\n            p.created_at, p.updated_at\n         FROM projects p\n         LEFT JOIN clients c ON p.client_id = c.id\n         LEFT JOIN users u ON p.project_manager_id = u.id\n         LEFT JOIN (\n            SELECT \n                project_id,\n                SUM(duration_minutes) / 60.0 as total_hours,\n                SUM(CASE WHEN billable THEN duration_minutes ELSE 0 END) / 60.0 as billable_hours,\n                SUM(total_amount) as total_cost\n            FROM time_entries \n            WHERE project_id IS NOT NULL\n            GROUP BY project_id\n         ) te_stats ON p.id = te_stats.project_id\n         LEFT JOIN (\n            SELECT \n                project_id,\n                COUNT(*) as task_count,\n                COUNT(*) FILTER (WHERE status = 'completed') as completed_tasks\n            FROM tasks \n            GROUP BY project_id\n         ) task_stats ON p.id = task_stats.project_id\n         LEFT JOIN (\n            SELECT \n                p.id as project_id,\n                COUNT(t.*) as open_tickets\n            FROM projects p\n            LEFT JOIN tasks task ON p.id = task.project_id\n            LEFT JOIN tickets t ON task.ticket_id = t.id AND t.status NOT IN ('closed', 'resolved')\n            GROUP BY p.id\n         ) ticket_stats ON p.id = ticket_stats.project_id\n         ORDER BY p.created_at DESC\n         LIMIT $1 OFFSET $2",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "client_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "client_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "status",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 6,
+        "name": "start_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 7,
+        "name": "end_date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 8,
+        "name": "budget",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 9,
+        "name": "hourly_rate",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 10,
+        "name": "project_manager_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 11,
+        "name": "project_manager_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 12,
+        "name": "total_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 13,
+        "name": "billable_hours",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 14,
+        "name": "total_cost",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 15,
+        "name": "task_count",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 16,
+        "name": "completed_tasks",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 17,
+        "name": "open_tickets",
+        "type_info": "Int8"
+      },
+      {
+        "ordinal": 18,
+        "name": "progress_percentage",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 19,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 20,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true,
+      true
+    ]
+  },
+  "hash": "890f15aa7c08c980a3d2e822cf260a6c7b7d9ecf91902b74722c6a3949d6382d"
+}

@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO websocket_connections (connection_id, user_id, contact_id, connected_at) \n         VALUES ($1, $2, $3, NOW())",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "19f422119486304b011874824c6dcfd0f5c2b3deb8276649b85818c48c6cfc38"
+}

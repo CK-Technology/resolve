@@ -1,0 +1,22 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT DISTINCT user_id FROM (\n            SELECT assigned_to as user_id FROM tickets WHERE id = $1 AND assigned_to IS NOT NULL\n            UNION\n            SELECT user_id FROM ticket_watchers WHERE ticket_id = $1\n            UNION\n            SELECT id as user_id FROM users WHERE role_id IN (\n                SELECT id FROM roles WHERE name IN ('admin', 'technician')\n            )\n        ) AS users\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "user_id",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "ae76188455f286665ada4b38eca71d9239494a29ad964d610c2e1a468ba1ac44"
+}

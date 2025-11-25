@@ -1,0 +1,27 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        UPDATE software_licenses SET\n            client_id = $2, name = $3, vendor = $4, version = $5,\n            license_key = $6, license_type = $7, seats = $8, used_seats = $9,\n            purchase_date = $10, expiry_date = $11, renewal_date = $12,\n            cost = $13, notes = $14, updated_at = NOW()\n        WHERE id = $1\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Text",
+        "Varchar",
+        "Int4",
+        "Int4",
+        "Date",
+        "Date",
+        "Date",
+        "Numeric",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "727b4ead659a1b800fbc9c0ab35dc53fa96739f080868511d7942e78bf5b42eb"
+}

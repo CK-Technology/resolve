@@ -1,0 +1,20 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        INSERT INTO notifications (\n            id, user_id, title, message, notification_type,\n            entity_type, entity_id, read, created_at\n        )\n        VALUES ($1, $2, $3, $4, $5, $6, $7, false, NOW())\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Varchar",
+        "Text",
+        "Varchar",
+        "Varchar",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "21a53ffbc12d9e5e9a171f2f282d832a872c704def7e89c46f6ac6edb7de69f9"
+}

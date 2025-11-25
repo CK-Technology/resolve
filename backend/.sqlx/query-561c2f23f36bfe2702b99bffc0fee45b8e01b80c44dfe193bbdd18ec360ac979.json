@@ -1,0 +1,18 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE ticket_replies SET \n         details = $3,\n         time_worked = COALESCE($4, time_worked),\n         billable = COALESCE($5, billable)\n         WHERE id = $1 AND ticket_id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Int4",
+        "Bool"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "561c2f23f36bfe2702b99bffc0fee45b8e01b80c44dfe193bbdd18ec360ac979"
+}
